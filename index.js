@@ -1,33 +1,38 @@
-require('dotenv').config()
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import dotenv from 'dotenv'
+import formidable from 'express-formidable'
 
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const {auth} = require('./src/resources/middleware')
-
-const user = require('./src/routes/user')
-const hotel = require('./src/routes/hotel')
-const plane = require('./src/routes/plane')
-const rooms = require('./src/routes/rooms')
-
+import user from './src/routes/user.js'
+// import hotel from './src/routes/hotel.js'
+// import plane from './src/routes/plane.js'
+// import rooms from './src/routes/rooms.js'
 const app = express()
+dotenv.config()
 
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 // app.use('/src/images',express.static('src/images/item'))
 // app.use('/src/images',express.static('src/images/restaurant'))
 // app.use('/src/images',express.static('src/images/categories'))
 
 app.use(bodyParser.json())
 app.use(cors())
-app.use('/user',user)
-app.use('/hotel',hotel)
-app.use('/plane',plane)
-app.use('/rooms',rooms)
+// app.use(formidable({
+//     uploadDir:'./src/images/',
+//     multiples:false,
+//     keepExtensions:true,
+    
+// }))
+app.use('/user', user)
+// app.use('/hotel', hotel)
+// app.use('/plane', plane)
+// app.use('/rooms', rooms)
 
 
 
-const port = process.env.APP_PORT
+const { APP_PORT } = process.env
 
-app.listen(port,()=>{
-    console.log('App listen on Port'+ port)
+app.listen(APP_PORT, () => {
+    console.log('App listen on Port ' + APP_PORT)
 })
